@@ -1,0 +1,22 @@
+web:
+        image: ddload/koa-bookshelf
+        ports:
+                - "3000:3000"
+        links:
+                - mongodb
+        volumes:
+                - .:/src
+
+mongodata:  
+        image: mongo:latest
+        volumes:
+                - /data/db
+        command: 
+                --break-mongo
+mongodb:
+        image: mongo:latest
+        volumes_from:
+                    - mongodata
+        ports:
+                - "27017:27017"
+        command: --smallfiles --rest
